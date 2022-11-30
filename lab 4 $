@@ -1,0 +1,98 @@
+   
+using System;
+
+class Program
+{
+    static void make_array(int[,] matrix, int[] array1, int[] array2)
+    {
+        int k = 0, l = 0;
+
+        for (int i = 0; i < matrix.GetLength(0); i++)
+            for (int j = 0; j < matrix.GetLength(1); j++)
+                if (i <= j)
+                    array1[k++] = matrix[i, j];
+                else
+                    array2[l++] = matrix[i, j];
+    }
+
+    static void sort(int[] array)
+    {
+        int left = 0; int right = array.Length - 1;
+        while (left < right)
+        {
+            bool flag=false;
+
+            for (int i = left; i < right; i++)
+            {
+                if (array[i] < array[i + 1])
+                {
+                    int tmp = array[i];
+                    array[i] = array[i + 1];
+                    array[i + 1] = tmp;
+                    flag = true;
+                }
+            }
+            right -= 1;
+            if (!flag)
+                break;
+            flag = false;
+            for (int j = right; j > left; j--)
+            {
+                if (array[j] > array[j - 1])
+                {
+                    int tmp = array[j - 1];
+                    array[j - 1] = array[j];
+                    array[j] = tmp;
+                    flag=true;
+                }
+            }
+            left += 1;
+            if (!flag)
+                break;
+        } 
+    }       
+
+
+        
+
+    /* 
+     1 2 3
+     4 5 6
+     7 8 9
+     */
+
+    static void Main()
+    {
+        int n = 3;
+        int s = (n * (2 + (n - 1))) / 2;
+        int sn = n * n - s;
+        int[] array1 = new int[s];
+        int[] array2 = new int[sn];
+        int[,] matrix = new int[n, n];
+
+
+        int l = 1;
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++)
+                matrix[i, j] = l++;
+
+        make_array(matrix, array1, array2);
+
+        sort(array1);
+        sort(array2);
+
+        for (int i = 0; i < array1.Length; i++)
+            Console.Write(array1[i] + " ");
+
+        Console.WriteLine();
+
+
+
+
+        for (int i = 0; i < array2.Length; i++)
+            Console.Write(array2[i] + " ");
+
+
+
+    }
+}
